@@ -371,7 +371,8 @@ public:
 
     Endpoint::AcceptState accept_msg(const struct buffer *pbuf) const;
 
-    int accept(int listener_fd);        ///< accept incoming connection
+    int accept(int listener_fd) { return this->accept(listener_fd, NULL); }
+    int accept(int listener_fd, struct sockaddr* client);        ///< accept incoming connection
     bool setup(TcpEndpointConfig conf); ///< open connection and apply config
     bool reopen();                      ///< re-try connecting to the server
     void close();

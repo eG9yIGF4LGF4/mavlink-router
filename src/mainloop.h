@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "common/log.h"
 
@@ -29,6 +30,8 @@
 #include "endpoint.h"
 #include "timeout.h"
 #include "ulog.h"
+
+//typedef struct sockaddr sockaddr_t;
 
 struct Configuration {
     std::string conf_file_name;        ///< CLI "conf-file" only!
@@ -110,6 +113,7 @@ private:
     static const unsigned int LOG_AGGREGATE_INTERVAL_SEC = 5;
 
     std::vector<std::shared_ptr<Endpoint>> g_endpoints{};
+    std::map<std::shared_ptr<Endpoint>, std::shared_ptr<struct sockaddr>> g_clients{};
     int g_tcp_fd = -1; ///< for TCP server
     std::shared_ptr<LogEndpoint> _log_endpoint{nullptr};
 

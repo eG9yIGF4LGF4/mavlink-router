@@ -1519,7 +1519,7 @@ bool TcpEndpoint::reopen()
     return this->open(_ip, _port);
 }
 
-int TcpEndpoint::accept(int listener_fd)
+int TcpEndpoint::accept(int listener_fd, struct sockaddr* client)
 {
     struct sockaddr *sock;
     socklen_t addrlen;
@@ -1546,6 +1546,10 @@ int TcpEndpoint::accept(int listener_fd)
     if (setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&tcp_nodelay_state, sizeof(int)) < 0) {
         log_error("Error setting TCP_NODELAY on [%d]%s", fd, _name.c_str());
         return -1;
+    }
+
+    if(client_addr) {
+        memcpy(client_addr, sock, addrlen);
     }
 
     return fd;

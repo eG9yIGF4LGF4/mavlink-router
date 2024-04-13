@@ -210,6 +210,10 @@ void Mainloop::process_tcp_hangups()
             auto *tcp_endpoint = static_cast<TcpEndpoint *>(it->get());
             if (!tcp_endpoint->is_valid()) {
                 it = g_endpoints.erase(it);
+
+                log_debug("TCP Server: Dropped client");
+
+                g_clients.erase(it);
             } else {
                 ++it;
             }
@@ -226,13 +230,16 @@ void Mainloop::handle_tcp_connection()
     log_debug("TCP Server: New client");
 
     auto *tcp = new TcpEndpoint{"dynamic"};
+    struct sockaddr* client = malloc(sizeof(sockaddr));
 
-    int fd = tcp->accept(g_tcp_fd);
+    int fd = tcp->accept(g_tcp_fd, client);
     if (fd == -1) {
         goto accept_error;
     }
 
     g_endpoints.emplace_back(tcp);
+    g_clients[tcp] = client;
+
     this->add_fd(g_endpoints.back()->fd, g_endpoints.back().get(), EPOLLIN);
 
     return;

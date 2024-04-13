@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    needs: [formatting-check]
     strategy:
       matrix:
         include:
@@ -100,7 +99,6 @@ jobs:
   alpine-linux:
     name: alpine 3.14 (musl)
     runs-on: ubuntu-20.04
-    needs: [formatting-check]
     container: alpine:3.14
     steps:
       - name: install dependencies

@@ -230,7 +230,7 @@ void Mainloop::handle_tcp_connection()
     log_debug("TCP Server: New client");
 
     auto *tcp = new TcpEndpoint{"dynamic"};
-    struct sockaddr* client = malloc(sizeof(sockaddr));
+    struct sockaddr* client = (struct sockaddr*)malloc(sizeof(sockaddr));
 
     int fd = tcp->accept(g_tcp_fd, client);
     if (fd == -1) {

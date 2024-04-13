@@ -1548,8 +1548,8 @@ int TcpEndpoint::accept(int listener_fd, struct sockaddr* client)
         return -1;
     }
 
-    if(client_addr) {
-        memcpy(client_addr, sock, addrlen);
+    if(client) {
+        memcpy((void*)client, (void*)sock, addrlen);
     }
 
     return fd;

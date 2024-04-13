@@ -118,6 +118,13 @@ const ConfFile::OptionsTable TcpEndpoint::option_table[] = {
     {"group",           false,  ConfFile::parse_stdstring,      OPTIONS_TABLE_STRUCT_FIELD(TcpEndpointConfig, group)},
     {}
 };
+
+const char *VideoEndpoint::section_pattern = "videoendpoint *";
+const ConfFile::OptionsTable VideoEndpoint::option_table[] = {
+    {"address",         true,   ConfFile::parse_stdstring,      OPTIONS_TABLE_STRUCT_FIELD(VideoEndpointConfig, address)},
+    {"port",            true,   ConfFile::parse_ul,             OPTIONS_TABLE_STRUCT_FIELD(VideoEndpointConfig, port)},
+    {}
+};
 // clang-format on
 
 static bool ip_str_is_ipv6(const char *ip)
@@ -1823,3 +1830,6 @@ bool TcpEndpoint::_retry_timeout_cb(void *data)
 
     return false; // connection is fine now, no retry
 }
+
+VideoEndpoint::VideoEndpoint(std::string name) : Endpoint{ENDPOINT_TYPE_UDP, std::move(name)} { }
+VideoEndpoint::~VideoEndpoint() {}

@@ -34,6 +34,7 @@
 #define ENDPOINT_TYPE_UART "UART"
 #define ENDPOINT_TYPE_UDP  "UDP"
 #define ENDPOINT_TYPE_TCP  "TCP"
+#define ENDPOINT_TYPE_TCP  "VIDEO"
 #define ENDPOINT_TYPE_LOG  "Log"
 
 struct UartEndpointConfig {
@@ -97,6 +98,12 @@ struct TcpEndpointConfig {
     std::vector<uint8_t> block_src_sys_in;
     std::string group;
 };
+
+struct VideoEndpointConfig {
+    std::string name;
+    std::string address;
+    unsigned long port;
+}
 
 /*
  * mavlink 2.0 packet in its wire format
@@ -401,3 +408,16 @@ private:
     struct sockaddr_in sockaddr;
     struct sockaddr_in6 sockaddr6;
 };
+
+class VideoEndpoint : public Endpoint {
+    public:
+        VideoEndpoint(std::string name);
+        ~VideoEndpoint() override;
+
+        static const ConfFile::OptionsTable option_table[];
+        static const char *section_pattern;
+        static bool validate_config(const VideoEndpointConfig &config);
+    private:
+        std::string _address{};
+        unsigned int _port;
+}

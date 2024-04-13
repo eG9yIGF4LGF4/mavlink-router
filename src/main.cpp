@@ -505,6 +505,23 @@ static int parse_confs(ConfFile &conffile, Configuration &config)
         config.tcp_configs.push_back(opt_tcp);
     }
 
+    iter = {};
+    offset = strlen(VideoEndpoint::section_pattern) - 1;
+    while (conffile.get_sections(VideoEndpoint::section_pattern, &iter) == 0) {
+        TcpEndpointConfig opt_vid{};
+        opt_vid.name = std::string(iter.name + offset, iter.name_len - offset);
+        opt_vid.port = ULONG_MAX; // unset port value to be checked later on
+        ret = conffile.extract_options(&iter, VideoEndpoint::option_table, &opt_vid);
+        if (ret != 0) {
+            return ret;
+        }
+
+        if (!VideoEndpoint::validate_config(opt_vid)) {
+            return -EINVAL; // error message was already logged by validate_config()
+        }
+        config.vid_configs.push_back(opt_vid);
+    }
+
     return 0;
 }
 

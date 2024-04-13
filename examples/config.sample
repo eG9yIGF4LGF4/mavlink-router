@@ -272,3 +272,8 @@ Port = 11000
 [TcpEndpoint delta]
 Address = 127.0.0.1
 Port = 25760
+
+
+[VideoEndpoint camera]
+Port=5500
+Address=127.0.0.1

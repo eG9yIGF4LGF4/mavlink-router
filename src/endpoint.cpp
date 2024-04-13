@@ -1864,7 +1864,7 @@ bool VideoEndpoint::setup(VideoEndpointConfig conf)
         return false;
     }
 
-    this->_ip = conf.address;
+    this->_address = conf.address;
     this->_port = conf.port;
     
     return true;

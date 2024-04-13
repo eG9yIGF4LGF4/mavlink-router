@@ -113,7 +113,7 @@ private:
     static const unsigned int LOG_AGGREGATE_INTERVAL_SEC = 5;
 
     std::vector<std::shared_ptr<Endpoint>> g_endpoints{};
-    std::map<Endpoint*, std::shared_ptr<struct sockaddr*>> g_clients{};
+    std::map<Endpoint*, struct sockaddr*> g_clients{};
     int g_tcp_fd = -1; ///< for TCP server
     std::shared_ptr<LogEndpoint> _log_endpoint{nullptr};
 

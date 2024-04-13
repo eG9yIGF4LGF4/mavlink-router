@@ -417,6 +417,8 @@ class VideoEndpoint : public Endpoint {
         static const ConfFile::OptionsTable option_table[];
         static const char *section_pattern;
         static bool validate_config(const VideoEndpointConfig &config);
+
+        bool setup(VideoEndpointConfig config);
     private:
         std::string _address{};
         unsigned int _port;

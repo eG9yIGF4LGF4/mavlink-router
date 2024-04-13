@@ -1831,5 +1831,41 @@ bool TcpEndpoint::_retry_timeout_cb(void *data)
     return false; // connection is fine now, no retry
 }
 
-VideoEndpoint::VideoEndpoint(std::string name) : Endpoint{ENDPOINT_TYPE_UDP, std::move(name)} { }
+VideoEndpoint::VideoEndpoint(std::string name) : Endpoint{ENDPOINT_TYPE_VIDEO, std::move(name)} { }
 VideoEndpoint::~VideoEndpoint() {}
+
+bool VideoEndpoint::validate_config(const VideoEndpointConfig &config)
+{
+    if (config.address.empty()) {
+        log_error("VideoEndpoint %s: IP address must be specified", config.name.c_str());
+        return false;
+    }
+
+    if (config.port == 0 || config.port == ULONG_MAX) {
+        log_error("VideoEndpoint %s: Invalid or unset video port %lu",
+                  config.name.c_str(),
+                  config.port);
+        return false;
+    }
+
+    // if (!validate_ip(config.address)) {
+    //     log_error("VideoEndpoint %s: Invalid IP address %s",
+    //               config.name.c_str(),
+    //               config.address.c_str());
+    //     return false;
+    // }
+
+    return true;
+}
+
+bool VideoEndpoint::setup(VideoEndpointConfig conf)
+{
+    if (!this->validate_config(conf)) {
+        return false;
+    }
+
+    this->_ip = conf.address;
+    this->_port = conf.port;
+    
+    return true;
+}

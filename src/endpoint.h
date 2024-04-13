@@ -31,11 +31,11 @@
 
 #define DEFAULT_BAUDRATE 115200U
 
-#define ENDPOINT_TYPE_UART "UART"
-#define ENDPOINT_TYPE_UDP  "UDP"
-#define ENDPOINT_TYPE_TCP  "TCP"
-#define ENDPOINT_TYPE_TCP  "VIDEO"
-#define ENDPOINT_TYPE_LOG  "Log"
+#define ENDPOINT_TYPE_UART  "UART"
+#define ENDPOINT_TYPE_UDP   "UDP"
+#define ENDPOINT_TYPE_TCP   "TCP"
+#define ENDPOINT_TYPE_VIDEO "VIDEO"
+#define ENDPOINT_TYPE_LOG   "Log"
 
 struct UartEndpointConfig {
     std::string name;
@@ -103,7 +103,7 @@ struct VideoEndpointConfig {
     std::string name;
     std::string address;
     unsigned long port;
-}
+};
 
 /*
  * mavlink 2.0 packet in its wire format
@@ -420,4 +420,4 @@ class VideoEndpoint : public Endpoint {
     private:
         std::string _address{};
         unsigned int _port;
-}
+};

@@ -511,6 +511,7 @@ static int parse_confs(ConfFile &conffile, Configuration &config)
         TcpEndpointConfig opt_vid{};
         opt_vid.name = std::string(iter.name + offset, iter.name_len - offset);
         opt_vid.port = ULONG_MAX; // unset port value to be checked later on
+        opt_vid.address = "127.0.0.1";
         ret = conffile.extract_options(&iter, VideoEndpoint::option_table, &opt_vid);
         if (ret != 0) {
             return ret;

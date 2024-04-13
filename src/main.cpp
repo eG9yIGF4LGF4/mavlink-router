@@ -508,7 +508,7 @@ static int parse_confs(ConfFile &conffile, Configuration &config)
     iter = {};
     offset = strlen(VideoEndpoint::section_pattern) - 1;
     while (conffile.get_sections(VideoEndpoint::section_pattern, &iter) == 0) {
-        TcpEndpointConfig opt_vid{};
+        VideoEndpointConfig opt_vid{};
         opt_vid.name = std::string(iter.name + offset, iter.name_len - offset);
         opt_vid.port = ULONG_MAX; // unset port value to be checked later on
         opt_vid.address = "127.0.0.1";

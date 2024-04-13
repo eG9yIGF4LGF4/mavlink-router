@@ -213,7 +213,7 @@ void Mainloop::process_tcp_hangups()
 
                 log_debug("TCP Server: Dropped client");
 
-                g_clients.erase(it);
+                g_clients.erase(&it);
             } else {
                 ++it;
             }
